@@ -131,3 +131,128 @@ setInterval(()=>{
         0.15+Math.random()*0.2;
 
 },1800);
+
+
+// =============================
+// HERO COAT ENGINE v0.2
+// =============================
+
+const coat = document.querySelector(".coat");
+
+let targetX = 0;
+let targetY = 0;
+
+document.addEventListener("mousemove", e => {
+
+    const x = (e.clientX / window.innerWidth - 0.5) * 16;
+    const y = (e.clientY / window.innerHeight - 0.5) * 16;
+
+    targetX = x;
+    targetY = y;
+
+});
+
+function animateCoat(){
+
+    coat.style.transform = `
+        perspective(1200px)
+        rotateY(${targetX}deg)
+        rotateX(${-targetY}deg)
+        translateY(-4px)
+    `;
+
+    requestAnimationFrame(animateCoat);
+
+}
+
+animateCoat();
+
+
+// =====================================
+// Золотой блик
+// =====================================
+
+const light = document.createElement("div");
+
+light.className="lightSweep";
+
+document.body.appendChild(light);
+
+function sweep(){
+
+    light.style.opacity="1";
+
+    light.animate([
+
+        {
+            left:"-25%"
+        },
+
+        {
+            left:"125%"
+        }
+
+    ],{
+
+        duration:2200,
+        easing:"ease-in-out"
+
+    });
+
+    setTimeout(()=>{
+
+        light.style.opacity="0";
+
+    },2200);
+
+}
+
+setInterval(sweep,9000);
+
+
+
+// =====================================
+// Мягкое дыхание герба
+// =====================================
+
+setInterval(()=>{
+
+    coat.animate([
+
+        {transform:"scale(1)"},
+
+        {transform:"scale(1.025)"},
+
+        {transform:"scale(1)"}
+
+    ],{
+
+        duration:3500
+
+    });
+
+},7000);
+
+
+//============================
+// OPEN ARCHIVE
+//============================
+
+const intro =
+document.getElementById("intro");
+
+window.addEventListener("load",()=>{
+
+    setTimeout(()=>{
+
+        intro.classList.add("open");
+
+    },1800);
+
+    setTimeout(()=>{
+
+        intro.remove();
+
+    },4500);
+
+});
