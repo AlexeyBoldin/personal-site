@@ -2379,3 +2379,30 @@ font-weight:bold;
         height: 220px;
     }
 }
+@media (max-width:768px){
+
+.footer-grid{
+    grid-template-columns:1fr;
+    gap:35px;
+    text-align:center;
+}
+
+.hero-content{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+.hero-left,
+.hero-right{
+    width:100%;
+    max-width:100%;
+}
+
+.hero-info{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+}
