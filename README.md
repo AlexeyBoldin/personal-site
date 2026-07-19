@@ -1,1 +1,1 @@
-Test WS.
+Test WS
