@@ -440,7 +440,6 @@ orderFormEl.addEventListener("submit", async function (e) {
 				{
 					order_number: number,
 					name: nameInput.value.trim(),
-					email: emailInput.value.trim(),
 					phone: phoneInput.value.trim(),
 					address: addressInput.value.trim(),
 					quantity: Number(qtyInput.value),
