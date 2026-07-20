@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель заказов</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+</head>
+
+<body>
+
+<div class="container admin-container">
+
+    <h1>Заказы</h1>
+
+    <input
+        id="searchOrder"
+        type="search"
+        placeholder="Поиск по имени, телефону или номеру заказа">
+
+    <table class="orders-table">
+
+        <thead>
+
+        <tr>
+            <th>№</th>
+            <th>Имя</th>
+            <th>Телефон</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+            <th>Дата</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="ordersBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>
