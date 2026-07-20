@@ -443,7 +443,7 @@ orderFormEl.addEventListener("submit", async function (e) {
 					phone: phoneInput.value.trim(),
 					address: addressInput.value.trim(),
 					quantity: Number(qtyInput.value),
-					total_price: Number(totalPrice.textContent.replace(/[^\d]/g, "")),
+					total: Number(totalPrice.textContent.replace(/[^\d]/g, "")),
 					comment: commentInput.value.trim()
 				}
 			]);
