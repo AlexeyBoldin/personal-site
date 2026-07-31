@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Empire</title>
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="Market Empire — экономическая стратегия с биржей">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Заставка -->
+<div id="splash-screen">
+    <h1>MARKET EMPIRE</h1>
+    <p>Каждая империя начинается с первой сделки.</p>
+</div>
+
+<!-- Главное меню -->
+<section id="main-menu" class="hidden">
+    <h1>MARKET EMPIRE</h1>
+    <p class="menu-tagline">Экономическая стратегия</p>
+    <button id="newGameBtn" class="btn-primary">Новая игра</button>
+    <button id="continueBtn">Продолжить</button>
+    <button id="settingsMenuBtn">Настройки</button>
+    <p class="menu-version">Версия 0.2.2 (Alpha)</p>
+</section>
+
+<!-- Игра -->
+<div id="app" class="hidden">
+
+    <!-- Сайдбар -->
+    <nav id="sidebar">
+        <div class="brand">
+            <span class="brand-icon">🏛️</span>
+            <div class="brand-text">
+                <strong>MARKET</strong>
+                <strong>EMPIRE</strong>
+            </div>
+        </div>
+
+        <button class="nav-item active" data-view="market">
+            <span class="nav-icon">📊</span> Биржа
+        </button>
+        <button class="nav-item" data-view="portfolio">
+            <span class="nav-icon">💼</span> Портфель
+        </button>
+        <button class="nav-item" data-view="news">
+            <span class="nav-icon">📰</span> Новости
+        </button>
+        <button class="nav-item" data-view="bank">
+            <span class="nav-icon">🏦</span> Банк
+        </button>
+        <button class="nav-item" data-view="casino">
+            <span class="nav-icon">🎰</span> Казино
+        </button>
+        <button class="nav-item" data-view="family">
+            <span class="nav-icon">📱</span> Сообщения
+            <span class="nav-badge hidden" id="familyBadge">0</span>
+        </button>
+        <button class="nav-item" data-view="assets">
+            <span class="nav-icon">🏠</span> Имущество
+        </button>
+        <button class="nav-item" data-view="reports">
+            <span class="nav-icon">📑</span> Отчёты
+        </button>
+        <button class="nav-item" data-view="achievements">
+            <span class="nav-icon">🏆</span> Достижения
+        </button>
+        <button class="nav-item" data-view="settings">
+            <span class="nav-icon">⚙️</span> Настройки
+        </button>
+
+        <div class="sidebar-spacer"></div>
+
+        <div id="nextDayCard">
+            <strong>Следующий день</strong>
+            <p>Нажмите, чтобы перейти к следующему торговому дню и обновить рынок.</p>
+            <button id="nextDayBtn">Следующий день »</button>
+        </div>
+
+        <button class="nav-item nav-exit" id="exitBtn">
+            <span class="nav-icon">🚪</span> Выйти
+        </button>
+    </nav>
+
+    <div id="mainCol">
+        <!-- Верхняя панель -->
+        <header id="topBar">
+            <div class="stat-row">
+                <div class="stat stat-clickable" id="calendarTrigger">
+                    <span class="calendar-icon"><span class="cal-top" id="calIconMonth">ИЮЛ</span><span class="cal-day" id="calIconDay">1</span></span>
+                    <div>
+                        <div class="stat-label">День <span id="dayNum">1</span></div>
+                        <div class="stat-sub" id="dateLabel">—</div>
+                    </div>
+                    <div id="calendarPopover" class="calendar-popover hidden"></div>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">💰</span>
+                    <div>
+                        <div class="stat-label">Деньги</div>
+                        <div class="stat-sub money-value" id="moneyLabel">0 ₽</div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">⭐</span>
+                    <div>
+                        <div class="stat-label">Репутация</div>
+                        <div class="stat-sub">
+                            <span id="repValue">50</span>
+                            <span class="rep-bar"><span id="repFill"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="topbar-spacer"></div>
+            <div class="topbar-actions">
+                <button class="icon-btn mobile-next-day" id="nextDayBtnTop" title="Следующий день">⏭️</button>
+                <button class="icon-btn" data-view="reports" title="Графики">📈</button>
+                <button class="icon-btn" data-view="achievements" title="Достижения">🏆</button>
+                <button class="icon-btn" data-view="settings" title="Настройки">⚙️</button>
+                <button class="icon-btn" id="exitBtn2" title="Выйти">🚪</button>
+            </div>
+        </header>
+
+
+        <!-- Экраны -->
+        <main id="views">
+
+            <!-- Биржа -->
+            <section id="view-market" class="view active">
+                <div class="content-grid">
+                    <div class="col-main">
+                        <div class="panel">
+                            <h2>Биржа</h2>
+                            <p class="panel-sub">Покупайте и продавайте товары. Следите за изменением цен и зарабатывайте!</p>
+                            <div id="goodsContainer"></div>
+                        </div>
+
+                        <div class="panel" id="chartPanel">
+                            <div class="chart-head">
+                                <h2 id="chartTitle">График цен: Нефть</h2>
+                                <select id="chartGoodSelect" class="good-select"></select>
+                                <div class="period-buttons">
+                                    <button class="period-btn active" data-period="1">1д</button>
+                                    <button class="period-btn" data-period="7">7д</button>
+                                    <button class="period-btn" data-period="30">30д</button>
+                                    <button class="period-btn" data-period="90">90д</button>
+                                </div>
+                            </div>
+                            <canvas id="mainChart" height="220"></canvas>
+                            <div class="econ-stats" id="econStats"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-side">
+                        <div class="panel">
+                            <h2>💼 Портфель</h2>
+                            <div id="portfolioMiniTable"></div>
+                        </div>
+                        <div class="panel">
+                            <div class="news-head">
+                                <h2>📰 Последние новости</h2>
+                                <button class="link-btn" data-view="news">Все новости</button>
+                            </div>
+                            <div id="newsFeedMini"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Портфель -->
+            <section id="view-portfolio" class="view">
+                <div class="panel">
+                    <div class="spin-badge-wrap"><div class="spin-badge rotate">💼</div></div>
+                    <h2>💼 Портфель</h2>
+                    <p class="panel-sub">Все ваши активные позиции на рынке.</p>
+                    <div id="portfolioFullTable"></div>
+                </div>
+                <div class="panel">
+                    <h2>🏠 Имущество</h2>
+                    <p class="panel-sub">Купленная недвижимость, транспорт и техника.</p>
+                    <div id="ownedAssetsTable"></div>
+                </div>
+            </section>
+
+            <!-- Новости -->
+            <section id="view-news" class="view">
+                <div class="panel">
+                    <div class="news-hero">
+                        <div class="spotlight spotlight-left"></div>
+                        <div class="spotlight spotlight-right"></div>
+                        <div class="globe-sphere" id="globeSphere"></div>
+                    </div>
+                    <h2>📰 Лента новостей</h2>
+                    <div id="newsFeedFull"></div>
+                </div>
+            </section>
+
+            <!-- Банк -->
+            <section id="view-bank" class="view">
+                <div class="panel">
+                    <div class="spin-badge-wrap"><div class="spin-badge rotate">💲</div></div>
+                    <h2>🏦 Банк</h2>
+                    <p class="panel-sub">Храните деньги под проценты или берите кредит на развитие.</p>
+                    <div id="bankContent"></div>
+                </div>
+            </section>
+
+            <!-- Казино -->
+            <section id="view-casino" class="view">
+                <div class="panel">
+                    <div class="spin-badge-wrap"><div class="spin-badge tumble">🎲</div></div>
+                    <h2>🎰 Казино</h2>
+                    <p class="panel-sub">Ипподром, лотерея, покер, рулетка, блэкджек и автомат — на игровые деньги.</p>
+                    <div id="casinoContent"></div>
+                </div>
+            </section>
+
+            <!-- Сообщения -->
+            <section id="view-family" class="view">
+                <div class="panel">
+                    <h2>📱 Сообщения</h2>
+                    <p class="panel-sub">Родные иногда просят о помощи — решать вам: дать или отказать.</p>
+                    <div id="phoneContainer"></div>
+                </div>
+            </section>
+
+            <!-- Имущество -->
+            <section id="view-assets" class="view">
+                <div class="panel">
+                    <h2>🏠 Имущество</h2>
+                    <p class="panel-sub">Крупные покупки повышают репутацию и статус.</p>
+                    <div id="assetsContent"></div>
+                </div>
+            </section>
+
+            <!-- Отчёты -->
+            <section id="view-reports" class="view">
+                <div class="panel">
+                    <h2>📑 Отчёты</h2>
+                    <div id="reportsContent"></div>
+                </div>
+            </section>
+
+            <!-- Достижения -->
+            <section id="view-achievements" class="view">
+                <div class="panel">
+                    <h2>🏆 Достижения</h2>
+                    <div id="achievementsContent"></div>
+                </div>
+            </section>
+
+            <!-- Настройки -->
+            <section id="view-settings" class="view">
+                <div class="panel">
+                    <h2>⚙️ Настройки</h2>
+                    <div id="settingsContent"></div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Нижняя статус-строка -->
+        <footer id="statusBar">
+            <span>Версия 0.2.2 (Alpha)</span>
+            <span>● Экономика: <b id="econStatus">Стабильная</b></span>
+            <span>📊 Инфляция: <b id="inflationLabel">4.2%</b></span>
+            <span>💵 Курс USD: <b id="usdLabel">89.42 ₽</b></span>
+            <span>☁️ Автосохранение: <b id="autosaveLabel">—</b></span>
+        </footer>
+    </div>
+</div>
+
+<div id="taxModalOverlay" class="modal-overlay hidden">
+    <div class="modal-card" id="taxModalCard"></div>
+</div>
+
+<script src="js/save.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/tax.js"></script>
+<script src="js/market.js"></script>
+<script src="js/economy.js"></script>
+<script src="js/events.js"></script>
+<script src="js/news.js"></script>
+<script src="js/assets.js"></script>
+<script src="js/family.js"></script>
+<script src="js/messages.js"></script>
+<script src="js/casino.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

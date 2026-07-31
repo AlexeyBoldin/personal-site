@@ -1,0 +1,9 @@
+{
+  "name": "Market Empire",
+  "short_name": "MarketEmpire",
+  "description": "Экономическая стратегия с современной биржей",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220"
+}
